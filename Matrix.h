@@ -18,6 +18,6 @@ public:
 	void MatrixInput();
 
 	//Wyswietlanie macierzy
-	void ShowMatrix();
+	void ShowMatrix(); 
 
 };

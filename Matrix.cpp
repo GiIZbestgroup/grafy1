@@ -3,6 +3,8 @@
 
 using namespace std;
 
+//Testowykomentarz
+
 Matrix::Matrix()
 {
 	matrix = NULL;

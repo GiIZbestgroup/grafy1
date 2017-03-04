@@ -28,6 +28,9 @@ public:
 
 	//Z pliku
 	void AdjMatrixFromFile();
+	
+	//Sprawdzanie poprawnosci macierzy (ma byc symetryczna)
+	bool CheckAdjacencyMatrix();
 
 	//Wyswietlanie
 	void ShowAdjMatrix();

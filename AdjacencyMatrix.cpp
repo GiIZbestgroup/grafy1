@@ -34,3 +34,24 @@ void AdjacencyMatrix::IncMatrixToAdjMatrix()
 {
 
 }
+
+bool AdjacencyMatrix::IsSymmetricalMatrix()
+{
+	bool answer = true;
+	if(adjacencyMatrix.rows==adjacencyMatrix.columns)
+	{
+		for(int i=0;i<rows;i++)
+		{
+			for(int j=0;j<columns;j++)
+			{
+				if(adjacencyMatrix.matrix[i][j]!=adjacencyMatrix.matrix[j][i])
+					answer = false;
+			}
+		}
+	}
+	else
+	{
+		answer = false;
+	}
+	return answer;
+}

@@ -30,23 +30,26 @@ int main()
     //PARAMETRY:
 
     //Liczba wierzchołków
-    int numberofNodes = 14;
+    int numberofNodes = 20;
     //Prawdopodobieństwo (łączenie węzłów, ponowne złączanie w przypadku funkcji strogatz()) dane w procentach
     int probability_of_connection = 10;
     //Liczba węzłów na obręcz
-    int nodesperLattice = 2;
+    int nodesperLattice = 20;
     //Stosunek rozmiaru mniejszej obręczy do większej
     float latticesProportion = 0.75;
-
+    //Upragniona liczba krawędzi przy generowaniu losowego z określoną ich liczbą
+    int desiredNumberofEdges = 10;
 
     //Wygenerowanie macierzy sąsiedztwa dla danej liczby wierzchołków według różnych algorytmów klasy Generator:
     //Graf losowy o zadanej liczbie węzłów i prawdopodobieństwie połaczenia (liczba krawędzi to referencja aby zmieniało tą liczbę w mainie)
     //std::vector<std::vector<int>> connectionArray=Generator::random(probability_of_connection,numberofNodes,numberofEdges);
     //Graf pełny o zadanej liczbie węzłów (znów liczba krawędzi jest referencja z maina i określa obecną ich liczbę)
-    std::vector<std::vector<int>> connectionArray=Generator::fullGraph(numberofNodes,numberofEdges);
+    //std::vector<std::vector<int>> connectionArray=Generator::fullGraph(numberofNodes,numberofEdges);
     //Graf losowy o zadanym niczym!
     //std::vector<std::vector<int>> connectionArray=Generator::fullyRandom(probability_of_connection,numberofNodes,numberofEdges,nodesperLattice);
-
+    //Graf losowy o zadanej liczbie węzłów, krawędzi i pradopodobieństwie
+    std::vector<std::vector<int>> connectionArray=Generator::randomSpecifiedEdges(probability_of_connection,numberofNodes,numberofEdges,desiredNumberofEdges);
+    
 
 
     //Stworzenie punktów i podpisów (obiektów graficznych) wedle parametrów danych wyżej

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <string>
+#include <fstream>
 
 #define WINDOWSIZE_X 720
 #define WINDOWSIZE_Y 480
@@ -10,6 +12,42 @@
 #include "Point.h"
 #include "Generator.h"
 #include "GraphicObjects.h"
+
+std::vector <std::vector<int>> fromfile(int& numberofNodes,int& numberofEdges)
+{
+        std::ifstream file("graph.txt");
+        int x_size,y_size;
+        file >> x_size;
+        x_size = static_cast<int>(x_size);
+
+        int tmp;
+
+        if(x_size != 0)
+        {
+            std::vector<std::vector<int>> connectionArray1(x_size,std::vector<int> (x_size));
+            std::cout<<"Macierz "<<x_size<<" na "<<x_size<<std::endl;
+            for(int i=0; i<x_size; i++)
+            {
+                for(int j=0; j<x_size; j++)
+                {
+                    file >> tmp;
+                    if (tmp)
+                        numberofEdges++;
+                    std::cout<<tmp;
+                    connectionArray1[i][j] = tmp;
+                }
+                std::cout<<std::endl;
+            }
+            numberofNodes = x_size;
+            return connectionArray1;
+        }
+        else
+        {
+            std::vector <std::vector<int>> k;
+            std::cout<<"Niestety nie"<<std::endl;
+            return k;
+        }
+}
 
 int main()
 {
@@ -55,9 +93,17 @@ int main()
      switch(choice)
      {
         case 1:
-        //zpliku
+
+        connectionArray = fromfile(numberofNodes,numberofEdges);
+        std::cout<<"\nPodaj liczbę węzłów na jedną obręcz:"<<std::endl;
+        std::cin>>nodesperLattice;
+        std::cout<<"Podaj proporcję wielkości obręczy:"<<std::endl;
+        std::cin>>latticesProportion;
+        
         break;
+        
         case 2:
+
         std::cout<<"Podaj liczbę węzłów:"<<std::endl;
         std::cin>>numberofNodes;
         std::cout<<"Podaj Prawdopodobieństwo połączenia węzłów:"<<std::endl;
@@ -67,8 +113,11 @@ int main()
         std::cout<<"Podaj proporcję wielkości obręczy:"<<std::endl;
         std::cin>>latticesProportion;
         connectionArray=Generator::random(probability_of_connection,numberofNodes,numberofEdges);
+        
         break;
+
         case 3:
+
         std::cout<<"Podaj liczbę węzłów:"<<std::endl;
         std::cin>>numberofNodes;
         std::cout<<"Podaj upragnioną liczbę krawędzi:"<<std::endl;
@@ -79,13 +128,19 @@ int main()
         std::cout<<"Podaj proporcję wielkości obręczy:"<<std::endl;
         std::cin>>latticesProportion;
         connectionArray=Generator::randomSpecifiedEdges(probability_of_connection,numberofNodes,numberofEdges,desiredNumberofEdges);
+       
         break;
+
         case 4:
+
         std::cout<<"Podaj proporcję wielkości obręczy:"<<std::endl;
         std::cin>>latticesProportion;
         connectionArray=Generator::fullyRandom(probability_of_connection,numberofNodes,numberofEdges,nodesperLattice);
+        
         break;
+
         case 5:
+
         std::cout<<"Podaj liczbę węzłów:"<<std::endl;
         std::cin>>numberofNodes;   
         std::cout<<"Podaj liczbę węzłów na jedną obręcz:"<<std::endl;
@@ -93,9 +148,11 @@ int main()
         std::cout<<"Podaj proporcję wielkości obręczy:"<<std::endl;
         std::cin>>latticesProportion;
         connectionArray=Generator::fullGraph(numberofNodes,numberofEdges);
+        
         break;
 
      }
+
 
      //Stworzenie okna
      sf::RenderWindow window(sf::VideoMode(WINDOWSIZE_X, WINDOWSIZE_Y), "GraphMaker - Master the Space-Time Continuum"); 

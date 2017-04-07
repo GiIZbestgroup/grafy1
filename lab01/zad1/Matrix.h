@@ -12,6 +12,14 @@ public:
 	Matrix(const int rows, const int columns);
 	~Matrix();
 
+	//Gettery
+	int** GetMatrix() const;
+	int GetRows() const;
+	int GetColumns() const;
+
+	//Settery
+	void SetField(int row, int column, int value) const;
+
 	//Tworzenie i inicjalizacja macierzy
 	void Init(const int rows, const int columns);
 

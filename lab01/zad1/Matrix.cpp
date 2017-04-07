@@ -24,6 +24,26 @@ Matrix::~Matrix()
 //	delete[] this->matrix;
 }
 
+int** Matrix::GetMatrix() const
+{
+	return matrix;
+}
+
+int Matrix::GetRows() const
+{
+	return rows;
+}
+
+int Matrix::GetColumns() const
+{
+	return columns;
+}
+
+void Matrix::SetField(int row, int column, int value) const
+{
+	matrix[row][column] = value;
+}
+
 void Matrix::Init(int rows, int columns)
 {
 	this->rows = rows;

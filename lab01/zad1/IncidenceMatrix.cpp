@@ -1,38 +1,68 @@
 #include "IncidenceMatrix.h"
+#include "AdjacencyList.h"
 
-using namespace std;
-
-IncidenceMatrix::IncidenceMatrix()
+IncidenceMatrix::IncidenceMatrix(int vertexNumber, int edgesNumber)
 {
-	incidenceMatrix.MatrixInit(edgesNumber, verticlesNumber);
+	this->edgesNumber = edgesNumber;
+	this->vertexNumber = vertexNumber;
+	incidenceMatrix.Init(vertexNumber, edgesNumber);
 }
 
-void IncidenceMatrix::SetIncidenceMatrix(Matrix incidenceMatrix)
+int** IncidenceMatrix::Get() const
 {
-	this->incidenceMatrix = incidenceMatrix;
+	return incidenceMatrix.GetMatrix();
 }
 
-Matrix IncidenceMatrix::GetIncidenceMatrix()
+void IncidenceMatrix::Input() const
 {
-	return incidenceMatrix;
+	incidenceMatrix.Input();
 }
 
-void IncidenceMatrix::IncMatrixFromInput()
+void IncidenceMatrix::FromFile(const char* path)
 {
-	incidenceMatrix.MatrixInput();
+	incidenceMatrix.FromFile(path);
 }
 
-void IncidenceMatrix::IncMatrixFromFile()
+void IncidenceMatrix::ToFile(const char * path) const
 {
-
+	incidenceMatrix.ToFile(path);
 }
 
-void IncidenceMatrix::ShowIncMatrix()
+void IncidenceMatrix::Show() const
 {
-	incidenceMatrix.ShowMatrix();
+	incidenceMatrix.Show();
 }
 
-void IncidenceMatrix::AdjListToIncMatrix()
+IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList)
 {
+	IncidenceMatrix* incMatrix = new IncidenceMatrix(1, 1);
 
+	bool** condition = new bool*[adjList.GetVertexNumber()];
+	for(int i = 0; i<adjList.GetVertexNumber(); i++)
+	{
+		condition[i] = new bool[adjList.GetVertexNumber()];
+	}
+
+	int counter = 0;
+	int j = 0;
+
+	for (int i = 0; i < adjList.GetVertexNumber(); i++)
+	{
+		for (std::list<int>::iterator iter = adjList.Get().begin(); iter != adjList.Get().end(); ++iter) // Do zrobienia adjList.Get()
+		{
+			if (!condition[counter][i])
+			{
+				incMatrix->incidenceMatrix.SetField(i, j, 1);
+
+				condition[counter][i] = true;
+				condition[i][counter] = true;
+				counter++;
+				j++;
+			}
+		}
+	}
+
+	return incMatrix;
 }
+
+

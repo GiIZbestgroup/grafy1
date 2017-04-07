@@ -2,6 +2,7 @@
 
 #include "GraphRepresentation.h"
 #include "Matrix.h"
+#include "AdjacencyList.h"
 
 class IncidenceMatrix : public GraphRepresentation
 {
@@ -10,17 +11,25 @@ class IncidenceMatrix : public GraphRepresentation
 
 public:
 
-	IncidenceMatrix();
+	//Konstruktor
+	IncidenceMatrix(int vertexNumber, int edgesNumber);
 
-	void SetIncidenceMatrix(Matrix incidenceMatrix);
-	Matrix GetIncidenceMatrix();
+	//Getter
+	int** Get() const;
 
-	void IncMatrixFromInput();
+	//Z klawiatury
+	void Input() const;
 
-	void IncMatrixFromFile();
+	//Z pliku
+	void FromFile(const char* path);
 
-	void ShowIncMatrix();
+	//Do pliku
+	void ToFile(const char* path) const;
 
-	void AdjListToIncMatrix();
+	//Wyswietlanie
+	void Show() const;
+
+	//Konwersja z listy sasiedztwa
+	static IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList);
 
 };

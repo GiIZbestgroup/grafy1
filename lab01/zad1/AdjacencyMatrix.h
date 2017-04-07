@@ -2,6 +2,7 @@
 
 #include "GraphRepresentation.h"
 #include "Matrix.h"
+#include "IncidenceMatrix.h"
 
 class AdjacencyMatrix : public GraphRepresentation
 {
@@ -17,24 +18,23 @@ public:
 	//METODY////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Konstruktor
-	AdjacencyMatrix();
+	AdjacencyMatrix(int vertexNumber);
 
 	//Setter i getter
-	void SetAdjacencyMatrix(Matrix adjacencyMatrix);
-	Matrix GetAdjacencyMatrix();
+	int** Get() const;
 
 	//Z klawiatury
-	void AdjMatrixFromInput();
+	void Input() const;
 
 	//Z pliku
-	void AdjMatrixFromFile();
-	
-	//Sprawdzanie poprawnosci macierzy (gdy graf jest nieskierowany ma byc symetryczna)
-	bool IsSymmetricalMatrix();
+	void FromFile(const char* path);
+
+	//Do pliku
+	void ToFile(const char* path) const;
 
 	//Wyswietlanie
-	void ShowAdjMatrix();
+	void Show() const;
 
 	//Konwersja z macierzy incydencji
-	void IncMatrixToAdjMatrix();
+	static AdjacencyMatrix* AdjacencyMatrix::FromIncMatrix(IncidenceMatrix incMatrix);
 };

@@ -1,57 +1,61 @@
 #include "AdjacencyMatrix.h"
+#include "IncidenceMatrix.h"
 
-AdjacencyMatrix::AdjacencyMatrix()
+AdjacencyMatrix::AdjacencyMatrix(int vertexNumber)
 {
-	adjacencyMatrix.MatrixInit(edgesNumber, edgesNumber);
+	this->vertexNumber = vertexNumber;
+	adjacencyMatrix.Init(vertexNumber, vertexNumber);
 }
 
-void AdjacencyMatrix::SetAdjacencyMatrix(Matrix adjacencyMatrix)
+int** AdjacencyMatrix::Get() const
 {
-	this->adjacencyMatrix = adjacencyMatrix;
+	return adjacencyMatrix.GetMatrix();
 }
 
-Matrix AdjacencyMatrix::GetAdjacencyMatrix()
+void AdjacencyMatrix::Input() const
 {
-	return adjacencyMatrix;
+	adjacencyMatrix.Input();
 }
 
-void AdjacencyMatrix::AdjMatrixFromInput()
+void AdjacencyMatrix::FromFile(const char* path)
 {
-	adjacencyMatrix.MatrixInput();
+	adjacencyMatrix.FromFile(path);
 }
 
-void AdjacencyMatrix::AdjMatrixFromFile()
+void AdjacencyMatrix::ToFile(const char * path) const
 {
-
+	adjacencyMatrix.ToFile(path);
 }
 
-void AdjacencyMatrix::ShowAdjMatrix()
+void AdjacencyMatrix::Show() const
 {
-	adjacencyMatrix.ShowMatrix();
+	adjacencyMatrix.Show();
 }
 
-void AdjacencyMatrix::IncMatrixToAdjMatrix()
+AdjacencyMatrix* AdjacencyMatrix::FromIncMatrix(IncidenceMatrix incMatrix)
 {
+	int tmp[2] = { 0, 0 };
+	int counter = 0;
+	
+	AdjacencyMatrix* adjMatrix = new AdjacencyMatrix(incMatrix.GetVertexNumber());
+	adjMatrix->adjacencyMatrix.ZeroMatrix();
 
-}
-
-bool AdjacencyMatrix::IsSymmetricalMatrix()
-{
-	bool answer = true;
-	if(adjacencyMatrix.rows==adjacencyMatrix.columns)
+	for(int i = 0; i < incMatrix.GetEdgesNumber(); i++)
 	{
-		for(int i=0;i<rows;i++)
+		for(int j = 0; j < incMatrix.GetVertexNumber(); j++)
 		{
-			for(int j=0;j<columns;j++)
+			if(incMatrix.Get()[i][j] == 1)
 			{
-				if(adjacencyMatrix.matrix[i][j]!=adjacencyMatrix.matrix[j][i])
-					answer = false;
+				tmp[counter] = incMatrix.GetVertexNumber();
+				++counter;
 			}
 		}
+
+		adjMatrix[tmp[0]] = tmp[1];
+		adjMatrix[tmp[1]] = tmp[0];
 	}
-	else
-	{
-		answer = false;
-	}
-	return answer;
+
+	return adjMatrix;
 }
+
+

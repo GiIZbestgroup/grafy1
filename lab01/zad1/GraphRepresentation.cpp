@@ -27,12 +27,12 @@ void GraphRepresentation::SetVerticlesNumber(int verticlesNumber)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int GraphRepresentation::GetEdgesNumber()
+int GraphRepresentation::GetEdgesNumber() const
 {
 	return edgesNumber;
 }
 
-int GraphRepresentation::GetVerticlesNumber()
+int GraphRepresentation::GetVerticlesNumber() const
 {
 	return verticlesNumber;
 }

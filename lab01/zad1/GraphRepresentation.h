@@ -10,9 +10,10 @@ protected:
 	//ZMIENNE//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Liczba wierzcholkow
-	int edgesNumber;
+	int vertexNumber;
+
 	//Liczba krawedzi
-	int verticlesNumber;
+	int edgesNumber;
 
 public:
 	//METODY////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,11 +25,11 @@ public:
 	~GraphRepresentation();
 
 	//Settery
-	void SetEdgesNumber(int edgesNumber);
-	void SetVerticlesNumber(int verticlesNumber);
+	void SetEdgesNumber(int edgesNumber) { this->edgesNumber = edgesNumber; }
+	void SetVertexNumber(int vertexNumber) { this->vertexNumber = vertexNumber; }
 
 	//Gettery
-	int GetEdgesNumber();
-	int GetVerticlesNumber();
+	int GetEdgesNumber() const { return edgesNumber; }
+	int GetVertexNumber() const { return vertexNumber; }
 
 };

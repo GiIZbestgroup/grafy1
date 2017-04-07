@@ -38,7 +38,7 @@ IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList)
 	IncidenceMatrix* incMatrix = new IncidenceMatrix(1, 1);
 
 	bool** condition = new bool*[adjList.GetVertexNumber()];
-	for(int i = 0; i<adjList.GetVertexNumber(); i++)
+	for(int i = 0; i < adjList.GetVertexNumber(); i++)
 	{
 		condition[i] = new bool[adjList.GetVertexNumber()];
 	}
@@ -48,7 +48,7 @@ IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList)
 
 	for (int i = 0; i < adjList.GetVertexNumber(); i++)
 	{
-		for (std::list<int>::iterator iter = adjList.Get().begin(); iter != adjList.Get().end(); ++iter) // Do zrobienia adjList.Get()
+		for (std::list<int>::iterator iter = adjList.Get()->begin(); iter != adjList.Get()->end(); ++iter)
 		{
 			if (!condition[counter][i])
 			{

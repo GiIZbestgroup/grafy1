@@ -2,21 +2,21 @@
 
 using namespace std;
 
-void AdjacencyList::SetAdjacencyList(std::list<int> * adjacencyList)
+AdjacencyList::AdjacencyList(int vertexNumber)
 {
-	this->adjacencyList = adjacencyList;
+	this->vertexNumber = vertexNumber;
+
+	adjacencyList = new std::list<int>[vertexNumber];
 }
 
-std::list<int> * AdjacencyList::GetAdjacencyList()
+std::list<int> * AdjacencyList::Get() const
 {
 	return adjacencyList;
 }
 
-void AdjacencyList::AdjListFromInput()
+void AdjacencyList::FromInput() const
 {
 	int answer;
-
-	adjacencyList = new std::list<int>[edgesNumber];
 
 	for (int i = 0; i < edgesNumber; i++)
 	{
@@ -42,16 +42,21 @@ void AdjacencyList::AdjListFromInput()
 	}
 }
 
-void AdjacencyList::AdjListFromFile()
+void AdjacencyList::FromFile()
 {
 
 }
 
-void AdjacencyList::ShowAdjList(int edgesNumber)
+void AdjacencyList::ToFile(const char * path)
 {
-	for (int i = 0; i < edgesNumber; i++)
+
+}
+
+void AdjacencyList::Show() const
+{
+	for (int i = 0; i < vertexNumber; i++)
 	{
-		for (std::list<int>::iterator it = adjacencyList[i].begin(); it != adjacencyList[i].end(); it++)
+		for (std::list<int>::iterator it = adjacencyList[i].begin(); it != adjacencyList[i].end(); ++it)
 		{
 			cout << *it << " -> ";
 		}
@@ -59,7 +64,7 @@ void AdjacencyList::ShowAdjList(int edgesNumber)
 	}
 }
 
-void AdjacencyList::AdjMatrixToAdjList(Matrix adjacencyMatrix)
+void AdjacencyList::FromAdjMatrix(Matrix adjacencyMatrix)
 {
 	adjacencyList = new std::list<int>[edgesNumber];
 
@@ -69,10 +74,10 @@ void AdjacencyList::AdjMatrixToAdjList(Matrix adjacencyMatrix)
 
 		for (int j = 0; j < edgesNumber; j++)
 		{
-			if (adjacencyMatrix[i][j]) //POPRAWIC 
-			{
-				adjacencyList[i].push_back(j + 1);
-			}
+			//if (adjacencyMatrix[i][j]) //POPRAWIC 
+			//{
+			//	adjacencyList[i].push_back(j + 1);
+			//}
 		}
 	}
 }

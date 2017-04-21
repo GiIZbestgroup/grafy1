@@ -1,24 +1,25 @@
-int** AdjListToIncMatr (std::list<int> *adjList, int nodes, int edges)
+int** AdjListToIncMatr (std::vector<int> *adjList, int nodes, int edges)
 {
 	//alokujemy tablicę bool condition[nodes][nodes] i ustawiamy każdą wartość na false
 	//alokujemy tablicę int IncMatr[nodes][edges] i ustawiamy każdą wartość na 0
-	int counter = 0;
-	int i;
-	int j = 0;
 	
-	for (i = 0; i < nodes; i++)
+	int counter = 0;
+	
+	for (int i = 0; i < nodes; i++)
 	{
-		   for(list<int>::iterator iter=adjList.begin(); iter != adjList.end(); ++iter)
+		   for(vector<int>::iterator iter=adjList[i].begin(); iter != adjList[i].end(); ++iter)
 		   {
-			   if(!condition[counter][i])
-			   {
-				   IncMatr[i][j] = 1;
+				int j = *iter;
+
+				if(!condition[j][i])
+				{
+				   IncMatr[i][counter] = 1;
 				   
-				   condition[counter][i] = true;
-				   condition[i][counter] = true;
+				   condition[j][i] = true;
+				   condition[i][j] = true;
+				   
 				   counter++;
-				   j++;
-			   }
+				}
 		   }
 	}
 	

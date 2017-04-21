@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
 #include "GraphRepresentation.h"
 #include "AdjacencyMatrix.h"
 
@@ -16,7 +14,7 @@ public:
 
 	//Konstruktory
 	AdjacencyList();
-	AdjacencyList(int vertexNumber);
+	AdjacencyList(int vertexNumber, int edgesNumber);
 
 	//Getter
 	std::vector<int> * Get() const;

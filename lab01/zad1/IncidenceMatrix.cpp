@@ -1,10 +1,17 @@
 #include "IncidenceMatrix.h"
 #include "AdjacencyList.h"
 
+IncidenceMatrix::IncidenceMatrix()
+{
+	this->vertexNumber = 0;
+	this->edgesNumber = 0;
+}
+
 IncidenceMatrix::IncidenceMatrix(int vertexNumber, int edgesNumber)
 {
-	this->edgesNumber = edgesNumber;
 	this->vertexNumber = vertexNumber;
+	this->edgesNumber = edgesNumber;
+
 	incidenceMatrix.Init(vertexNumber, edgesNumber);
 }
 
@@ -21,6 +28,8 @@ void IncidenceMatrix::Input() const
 void IncidenceMatrix::FromFile(const char* path)
 {
 	incidenceMatrix.FromFile(path);
+	this->vertexNumber = incidenceMatrix.GetRows();
+	this->edgesNumber = incidenceMatrix.GetColumns();
 }
 
 void IncidenceMatrix::ToFile(const char * path) const
@@ -33,9 +42,11 @@ void IncidenceMatrix::Show() const
 	incidenceMatrix.Show();
 }
 
-IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList)
+IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList) //????????????????????????????????????????????????????????????????????????????
 {
-	IncidenceMatrix* incMatrix = new IncidenceMatrix(1, 1);
+	IncidenceMatrix* incMatrix = new IncidenceMatrix(adjList.GetVertexNumber(), adjList.GetEdgesNumber());
+
+	incMatrix->incidenceMatrix.ZeroMatrix();
 
 	bool** condition = new bool*[adjList.GetVertexNumber()];
 	for(int i = 0; i < adjList.GetVertexNumber(); i++)
@@ -43,21 +54,29 @@ IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList)
 		condition[i] = new bool[adjList.GetVertexNumber()];
 	}
 
+	for(int i = 0; i < adjList.GetVertexNumber(); i++)
+	{
+		for(int j = 0; j < adjList.GetVertexNumber(); j++)
+		{
+			condition[i][j] = false;
+		}
+	}
+
 	int counter = 0;
-	int j = 0;
+	int k = 0;
 
 	for (int i = 0; i < adjList.GetVertexNumber(); i++)
 	{
-		for (std::list<int>::iterator iter = adjList.Get()->begin(); iter != adjList.Get()->end(); ++iter)
+		for (int j = 0; j < adjList.Get()->size(); j++)
 		{
 			if (!condition[counter][i])
 			{
-				incMatrix->incidenceMatrix.SetField(i, j, 1);
+				incMatrix->incidenceMatrix.SetField(i, k, 1);
 
 				condition[counter][i] = true;
 				condition[i][counter] = true;
 				counter++;
-				j++;
+				k++;
 			}
 		}
 	}

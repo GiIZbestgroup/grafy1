@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 
 class GraphRepresentation
 {

@@ -4,29 +4,28 @@
 #include "Matrix.h"
 #include "IncidenceMatrix.h"
 
+class IncidenceMatrix;
+
 class AdjacencyMatrix : public GraphRepresentation
 {
-	//ZMIENNE//////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//Macierz sasiedztwa (tablica dwuwymiarowa)
+	//Macierz sasiedztwa
 	Matrix adjacencyMatrix;
 
-	//Lista pomocniczych macierzy do usuniecia w destruktorze
-	//static std::list<int **> toDelete;
-
 public:
-	//METODY////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Konstruktor
-	AdjacencyMatrix(int vertexNumber);
+	AdjacencyMatrix();
+	AdjacencyMatrix(int vertexNumber, int edgesNumber);
 
-	//Setter i getter
+	//Getter
 	int** Get() const;
 
 	//Z klawiatury
 	void Input() const;
 
 	//Z pliku
+	//Metoda wymaga uzycia obiektu zainicjalizowanego konstruktorem domyslnym (wskaznik tablicowy powinien wskazywac na nullptr)
+	//W przeciwnym wypadku stracimy wczeœniej zarezerwowana pamiec
 	void FromFile(const char* path);
 
 	//Do pliku
@@ -36,5 +35,6 @@ public:
 	void Show() const;
 
 	//Konwersja z macierzy incydencji
-	static AdjacencyMatrix* AdjacencyMatrix::FromIncMatrix(IncidenceMatrix incMatrix);
+	//Metoda statyczna, zwraca adres do nowego obiektu
+	static AdjacencyMatrix* FromIncMatrix(IncidenceMatrix incMatrix);
 };

@@ -5,13 +5,15 @@ using namespace std;
 AdjacencyList::AdjacencyList()
 {
 	this->vertexNumber = 0;
+	this->edgesNumber = 0;
 
 	adjacencyList = nullptr;
 }
 
-AdjacencyList::AdjacencyList(int vertexNumber)
+AdjacencyList::AdjacencyList(int vertexNumber, int edgesNumber)
 {
 	this->vertexNumber = vertexNumber;
+	this->edgesNumber = edgesNumber;
 
 	adjacencyList = new vector<int>[vertexNumber];
 }
@@ -53,7 +55,7 @@ void AdjacencyList::FromFile(const char * path)
 	FILE** newFile = new FILE*;
 	fopen_s(newFile, path, "r");
 
-	fscanf_s(*newFile, "%d", &vertexNumber);
+	fscanf_s(*newFile, "%d %d", &vertexNumber, &edgesNumber);
 	fscanf_s(*newFile, "\n");
 
 	adjacencyList = new vector<int>[vertexNumber];
@@ -80,7 +82,7 @@ void AdjacencyList::ToFile(const char * path) const
 	FILE** newFile = new FILE*;
 	fopen_s(newFile, path, "w");
 
-	fprintf(*newFile, "%d\n", vertexNumber);
+	fprintf(*newFile, "%d %d\n", vertexNumber, edgesNumber);
 
 	for (int i = 0; i < vertexNumber; i++)
 	{
@@ -110,7 +112,7 @@ void AdjacencyList::Show() const
 
 AdjacencyList* AdjacencyList::FromAdjMatrix(AdjacencyMatrix adjacencyMatrix)
 {
-	AdjacencyList* adjList = new AdjacencyList(adjacencyMatrix.GetVertexNumber());
+	AdjacencyList* adjList = new AdjacencyList(adjacencyMatrix.GetVertexNumber(), adjacencyMatrix.GetEdgesNumber());
 
 	for (int i = 0; i < adjacencyMatrix.GetVertexNumber(); i++)
 	{

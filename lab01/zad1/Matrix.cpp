@@ -140,6 +140,8 @@ void Matrix::FromFile(const char * path)
 		columns = rows;
 	}
 
+	Init(rows, columns);
+
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < columns; j++)

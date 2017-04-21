@@ -2,14 +2,21 @@
 
 using namespace std;
 
+AdjacencyList::AdjacencyList()
+{
+	this->vertexNumber = 0;
+
+	adjacencyList = nullptr;
+}
+
 AdjacencyList::AdjacencyList(int vertexNumber)
 {
 	this->vertexNumber = vertexNumber;
 
-	adjacencyList = new std::list<int>[vertexNumber];
+	adjacencyList = new vector<int>[vertexNumber];
 }
 
-std::list<int> * AdjacencyList::Get() const
+vector<int>* AdjacencyList::Get() const
 {
 	return adjacencyList;
 }
@@ -18,16 +25,15 @@ void AdjacencyList::FromInput() const
 {
 	int answer;
 
-	for (int i = 0; i < edgesNumber; i++)
+	for (int i = 0; i < vertexNumber; i++)
 	{
-		cout << "Wierzcholek nr " << i + 1;
-		adjacencyList[i].push_back(i + 1);
+		cout << "Wierzcholek nr " << i + 1 << ":" << endl;
 
 		do
 		{
 			cout << "Czy istnieje kolejny sasiad? Podaj go. Jesli nie wpisz 0." << endl;
 			cin >> answer;
-		} while (answer > edgesNumber || answer < 0);
+		} while (answer > vertexNumber || answer < 0);
 
 		while (answer)
 		{
@@ -37,47 +43,85 @@ void AdjacencyList::FromInput() const
 			{
 				cout << "Czy istnieje kolejny sasiad? Podaj go. Jesli nie wpisz 0." << endl;
 				cin >> answer;
-			} while (answer > edgesNumber || answer < 0);
+			} while (answer > vertexNumber || answer < 0);
 		}
 	}
 }
 
-void AdjacencyList::FromFile()
+void AdjacencyList::FromFile(const char * path)
 {
+	FILE** newFile = new FILE*;
+	fopen_s(newFile, path, "r");
 
+	fscanf_s(*newFile, "%d", &vertexNumber);
+	fscanf_s(*newFile, "\n");
+
+	adjacencyList = new vector<int>[vertexNumber];
+
+	for (int i = 0; i < vertexNumber; i++)
+	{
+		fscanf_s(*newFile, "%d");
+
+		while(!feof(*newFile)) // WARUNEK konca linii//////////////////////////////////////////////////////////
+		{
+			int value;
+			fscanf_s(*newFile, "%d", &value);
+			adjacencyList[i].push_back(value);
+		}
+
+		fscanf_s(*newFile, "\n");
+	}
+
+	fclose(*newFile);
 }
 
-void AdjacencyList::ToFile(const char * path)
+void AdjacencyList::ToFile(const char * path) const
 {
+	FILE** newFile = new FILE*;
+	fopen_s(newFile, path, "w");
 
+	fprintf(*newFile, "%d\n", vertexNumber);
+
+	for (int i = 0; i < vertexNumber; i++)
+	{
+		fprintf(*newFile, "%d ", i + 1);
+		for (int j = 0; j < adjacencyList[i].size(); j++)
+		{
+			fprintf(*newFile, "%d ", adjacencyList[i][j]);
+		}
+		fprintf(*newFile, "\n");
+	}
+
+	fclose(*newFile);
 }
 
 void AdjacencyList::Show() const
 {
 	for (int i = 0; i < vertexNumber; i++)
 	{
-		for (std::list<int>::iterator it = adjacencyList[i].begin(); it != adjacencyList[i].end(); ++it)
+		cout << i + 1 << ": ";
+		for (int j = 0; j < adjacencyList[i].size(); j++)
 		{
-			cout << *it << " -> ";
+			cout << adjacencyList[i][j] << ", ";
 		}
 		cout << endl;
 	}
 }
 
-void AdjacencyList::FromAdjMatrix(Matrix adjacencyMatrix)
+AdjacencyList* AdjacencyList::FromAdjMatrix(AdjacencyMatrix adjacencyMatrix)
 {
-	adjacencyList = new std::list<int>[edgesNumber];
+	AdjacencyList* adjList = new AdjacencyList(adjacencyMatrix.GetVertexNumber());
 
-	for (int i = 0; i < edgesNumber; i++)
+	for (int i = 0; i < adjacencyMatrix.GetVertexNumber(); i++)
 	{
-		adjacencyList[i].push_back(i + 1);
-
-		for (int j = 0; j < edgesNumber; j++)
+		for (int j = 0; j < adjacencyMatrix.GetVertexNumber(); j++)
 		{
-			//if (adjacencyMatrix[i][j]) //POPRAWIC 
-			//{
-			//	adjacencyList[i].push_back(j + 1);
-			//}
+			if (adjacencyMatrix.Get()[i][j])
+			{
+				adjList->adjacencyList[i].push_back(j + 1);
+			}
 		}
 	}
+
+	return adjList;
 }

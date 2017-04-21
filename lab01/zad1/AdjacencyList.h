@@ -1,38 +1,41 @@
 #pragma once
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include "GraphRepresentation.h"
-#include "Matrix.h"
+#include "AdjacencyMatrix.h"
+
+class AdjacencyMatrix;
 
 class AdjacencyList : public GraphRepresentation
 {
 	//Lista sasiedztwa (tablica list)
-	std::list<int> * adjacencyList;
-
-	//Liczba wierzcholkow
-	int vertexNumber;
+	std::vector<int> * adjacencyList;
 
 public:
 
-	//Konstruktor
+	//Konstruktory
+	AdjacencyList();
 	AdjacencyList(int vertexNumber);
 
 	//Getter
-	std::list<int> * Get() const;
+	std::vector<int> * Get() const;
 
 	//Z klawiatury
 	void FromInput() const;
 
 	//Z pliku
-	void FromFile();
+	//Metoda wymaga uzycia obiektu zainicjalizowanego konstruktorem domyslnym (wskaznik tablicowy powinien wskazywac na nullptr)
+	//W przeciwnym wypadku stracimy wczeœniej zarezerwowana pamiec
+	void FromFile(const char * path);
 
 	//Do pliku
-	void ToFile(const char* path);
+	void ToFile(const char* path) const;
 
 	//Wyswietlanie
 	void Show() const;
 
 	//Konwersja z macierzy sasiedztwa
-	void FromAdjMatrix(Matrix adjacencyMatrix);
+	//Metoda statyczna, zwraca adres do nowego obiektu
+	static AdjacencyList* FromAdjMatrix(AdjacencyMatrix adjacencyMatrix);
 };

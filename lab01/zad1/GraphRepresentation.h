@@ -7,7 +7,6 @@
 class GraphRepresentation
 {
 protected:
-	//ZMIENNE//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Liczba wierzcholkow
 	int vertexNumber;
@@ -16,13 +15,13 @@ protected:
 	int edgesNumber;
 
 public:
-	//METODY////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Konstruktory
-	GraphRepresentation();
+	GraphRepresentation(){}
+	GraphRepresentation(int vertexNumber, int edgesNumber){ this->vertexNumber = vertexNumber; this->edgesNumber = edgesNumber; }
 
 	//Destruktory
-	~GraphRepresentation();
+	~GraphRepresentation(){}
 
 	//Settery
 	void SetEdgesNumber(int edgesNumber) { this->edgesNumber = edgesNumber; }

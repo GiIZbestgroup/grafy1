@@ -64,11 +64,12 @@ void AdjacencyList::FromFile(const char * path)
 	{
 		fscanf_s(*newFile, "%d");
 
-		while(!feof(*newFile)) // WARUNEK konca linii//////////////////////////////////////////////////////////
+		int value;
+		fscanf_s(*newFile, "%d", &value);
+		while(!feof(*newFile) && value != 0) 
 		{
-			int value;
-			fscanf_s(*newFile, "%d", &value);
 			adjacencyList[i].push_back(value);
+			fscanf_s(*newFile, "%d", &value);
 		}
 
 		fscanf_s(*newFile, "\n");
@@ -91,7 +92,7 @@ void AdjacencyList::ToFile(const char * path) const
 		{
 			fprintf(*newFile, "%d ", adjacencyList[i][j]);
 		}
-		fprintf(*newFile, "\n");
+		fprintf(*newFile, "0 \n");
 	}
 
 	fclose(*newFile);

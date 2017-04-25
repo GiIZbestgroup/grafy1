@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 #include "Matrix.h"
 #include "AdjacencyMatrix.h"
 
@@ -23,7 +24,7 @@ int main(int argc, char* argv[])
 	clrScr();
 
 	int choice;
-	char path[50];
+	char* path = new char[50];
 
 	std::cout << "Podaj rodzaj reprezentacji grafu: " << std::endl;
 	std::cout << "	1: Macierz sasiedztwa" << std::endl;
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
 	if (choice)
 	{
 		clrScr();
-		std::cout << "Podaj sciezke do pliku (domyslnie \"graph.txt\"):" << std::endl;
+		std::cout << "Podaj sciezke do pliku:" << std::endl;
 		std::cin >> path;
 	}
 

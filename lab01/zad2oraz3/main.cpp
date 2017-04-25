@@ -15,9 +15,10 @@
 
 std::vector <std::vector<int>> fromfile(int& numberofNodes,int& numberofEdges)
 {
-        std::ifstream file("graph.txt");
+        std::ifstream file("adjMat.txt");
         int x_size,y_size;
         file >> x_size;
+        file >> y_size;
         x_size = static_cast<int>(x_size);
 
         int tmp;
@@ -47,6 +48,23 @@ std::vector <std::vector<int>> fromfile(int& numberofNodes,int& numberofEdges)
             std::cout<<"Niestety nie"<<std::endl;
             return k;
         }
+}
+
+void tofile(int numberofNodes, std::vector <std::vector<int>> matrix)
+{
+        std::ofstream file("adjMat.txt");
+        file << numberofNodes <<" ";
+        file << numberofNodes <<"\n";
+
+            for(int i=0; i<numberofNodes; i++)
+            {
+                for(int j=0; j<numberofNodes; j++)
+                {
+                    file <<matrix[i][j]<<" ";
+                }
+                file<<"\n";
+            }
+
 }
 
 int main()
@@ -80,9 +98,9 @@ int main()
 
     //Tu mamy obsługę wejścia:
 
-     std::cout<<std::endl<<"FUNKCJE PROGRAMU\n"<<"1 - wczytaj graf z pliku graph.txt\n";
+     std::cout<<std::endl<<"FUNKCJE PROGRAMU\n"<<"1 - wczytaj graf z pliku incMat.txt\n";
      std::cout<<"2 - generuj graf losowy o zadanej liczbie węzłów i prawdopodobieństwie\n";
-     std::cout<<"3 - generuj graf losowy o zadanej liczbie więzłów i krawędzi\n";
+     std::cout<<"3 - generuj graf losowy o zadanej liczbie węzłów i krawędzi\n";
      std::cout<<"4 - generuj graf losowy bez parametrów\n";
      std::cout<<"5 - generuj graf pełny o zadanej liczbie wierzchołków\n";
      int choice;
@@ -152,6 +170,9 @@ int main()
         break;
 
      }
+
+
+     tofile(numberofNodes,connectionArray);
 
 
      //Stworzenie okna

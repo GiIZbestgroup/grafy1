@@ -1,0 +1,33 @@
+//Format zapisu adjMatrix do pliku
+liczbaWierzcholkow 0                  //0 znaczy tyle ze macierz jest kwadratowa (bylo to wygodne przy warunkach)
+macierz WxW                           //liczby oddzielone spacjami
+
+//np.
+3 0
+0 1 0
+1 0 1
+0 1 0
+
+//*******************************************************************************************************************
+
+//Format zapisu incMatrix do pliku
+liczbaWierzcholkow liczbaKrawedzi     
+macierz WxK                           //liczby oddzielone spacjami
+
+//np.
+3 2
+1 0
+1 1
+0 1
+
+//*******************************************************************************************************************
+
+//Format zapisu adjList do pliku
+liczbaWierzcholkow liczbaKrawedzi     
+numerWierzcholka sasiedzi 0            //liczby oddzielone spacjami, 0 oznacza koniec wiersza (potrzebne przy odczycie, w rzeczywistosci do list zapisywani sa tylko sasiedzi, numer indeksu tablicy list oznacza numer wierzcholka)
+...
+//np.
+3 2
+1 2 0 
+2 1 3 0 
+3 2 0 

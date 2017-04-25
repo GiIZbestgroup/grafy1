@@ -63,22 +63,30 @@ IncidenceMatrix* IncidenceMatrix::FromAdjList(AdjacencyList adjList) //?????????
 	}
 
 	int counter = 0;
-	int k = 0;
 
 	for (int i = 0; i < adjList.GetVertexNumber(); i++)
 	{
-		for (int j = 0; j < adjList.Get()->size(); j++)
+		for (std::vector<int>::iterator iter = adjList.Get()[i].begin(); iter != adjList.Get()[i].end(); ++iter)
 		{
-			if (!condition[counter][i])
-			{
-				incMatrix->incidenceMatrix.SetField(i, k, 1);
+			int j = *iter - 1;
 
-				condition[counter][i] = true;
-				condition[i][counter] = true;
+			if (!condition[j][i])
+			{
+				incMatrix->incidenceMatrix.SetField(i, counter, 1);
+				incMatrix->incidenceMatrix.SetField(j, counter, 1);
+
+				condition[j][i] = true;
+				condition[i][j] = true;
+
 				counter++;
-				k++;
 			}
+
+			if (counter == adjList.GetEdgesNumber())
+				break;
 		}
+
+		if (counter == adjList.GetEdgesNumber())
+			break;
 	}
 
 	return incMatrix;

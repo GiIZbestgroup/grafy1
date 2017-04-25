@@ -90,8 +90,8 @@ int main(int argc, char* argv[])
 
 		clrScr();
 
-		std::cout << "Liczba wierzcholkow: " << adjMat->GetVertexNumber() << std::endl;
-		std::cout << "Liczba krawedzi: " << adjMat->GetEdgesNumber() << std::endl;
+		std::cout << "Liczba wierzcholkow: " << incMat->GetVertexNumber() << std::endl;
+		std::cout << "Liczba krawedzi: " << incMat->GetEdgesNumber() << std::endl;
 
 		std::cout << "\nMacierz sasiedztwa: " << std::endl;
 		adjMat->Show();
@@ -113,8 +113,8 @@ int main(int argc, char* argv[])
 
 		clrScr();
 
-		std::cout << "Liczba wierzcholkow: " << adjMat->GetVertexNumber() << std::endl;
-		std::cout << "Liczba krawedzi: " << adjMat->GetEdgesNumber() << std::endl;
+		std::cout << "Liczba wierzcholkow: " << adjList->GetVertexNumber() << std::endl;
+		std::cout << "Liczba krawedzi: " << adjList->GetEdgesNumber() << std::endl;
 
 		std::cout << "\nMacierz sasiedztwa: " << std::endl;
 		adjMat->Show();

@@ -53,7 +53,10 @@ void AdjacencyList::FromInput() const
 void AdjacencyList::FromFile(const char * path)
 {
 	FILE* newFile;
-	fopen_s(&newFile, path, "r");
+	if(fopen_s(&newFile, path, "r"))
+	{
+		throw - 1;
+	}
 
 	fscanf_s(newFile, "%d %d", &vertexNumber, &edgesNumber);
 	fscanf_s(newFile, "\n");
@@ -78,22 +81,22 @@ void AdjacencyList::FromFile(const char * path)
 
 void AdjacencyList::ToFile(const char * path) const
 {
-	FILE** newFile = new FILE*;
-	fopen_s(newFile, path, "w");
+	FILE* newFile;
+	fopen_s(&newFile, path, "w");
 
-	fprintf(*newFile, "%d %d\n", vertexNumber, edgesNumber);
+	fprintf(newFile, "%d %d\n", vertexNumber, edgesNumber);
 
 	for (int i = 0; i < vertexNumber; i++)
 	{
-		fprintf(*newFile, "%d ", i + 1);
+		fprintf(newFile, "%d ", i + 1);
 		for (int j = 0; j < adjacencyList[i].size(); j++)
 		{
-			fprintf(*newFile, "%d ", adjacencyList[i][j]);
+			fprintf(newFile, "%d ", adjacencyList[i][j]);
 		}
-		fprintf(*newFile, "0 \n");
+		fprintf(newFile, "0 \n");
 	}
 
-	fclose(*newFile);
+	fclose(newFile);
 }
 
 void AdjacencyList::Show() const

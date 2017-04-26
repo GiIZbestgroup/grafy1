@@ -1,10 +1,9 @@
 #include <iostream>
 #include <cstdlib>
-#include <cstring>
-#include "Matrix.h"
 #include "AdjacencyMatrix.h"
 
-void clrScr() { system("cls"); } //Na linuksie moze trzeba bedzie inaczej czyscic ekran!
+//Na linuksie moze trzeba bedzie inaczej czyscic ekran!
+void clrScr() { system("cls"); } 
 
 int main(int argc, char* argv[])
 {
@@ -47,101 +46,110 @@ int main(int argc, char* argv[])
 		std::cin >> choice;
 	}
 
-	if (choice)
-	{
-		clrScr();
-		std::cout << "Podaj sciezke do pliku:" << std::endl;
-		std::cin >> path;
-	}
-
 	AdjacencyMatrix* adjMat = new AdjacencyMatrix();
 	IncidenceMatrix* incMat = new IncidenceMatrix();
 	AdjacencyList* adjList = new AdjacencyList();
 
-	switch(choice)
+	try
 	{
-	case 1:
-		adjMat->FromFile(path);
-		adjList = AdjacencyList::FromAdjMatrix(*adjMat);
-		incMat = IncidenceMatrix::FromAdjList(*adjList);
+		if (choice)
+		{
+			clrScr();
+			std::cout << "Podaj sciezke do pliku:" << std::endl;
+			std::cin >> path;
+		}
+	
+		switch (choice)
+		{
+		case 1:
+			adjMat->FromFile(path);
+			adjList = AdjacencyList::FromAdjMatrix(*adjMat);
+			incMat = IncidenceMatrix::FromAdjList(*adjList);
 
+			clrScr();
+
+			std::cout << "Liczba wierzcholkow: " << adjMat->GetVertexNumber() << std::endl;
+			std::cout << "Liczba krawedzi: " << adjMat->GetEdgesNumber() << std::endl;
+
+			std::cout << "\nMacierz sasiedztwa: " << std::endl;
+			adjMat->Show();
+			std::cout << "\nMacierz incydencji: " << std::endl;
+			incMat->Show();
+			std::cout << "\nLista sasiedztwa: " << std::endl;
+			adjList->Show();
+
+			adjMat->ToFile("adjMat.txt");
+			incMat->ToFile("incMat.txt");
+			adjList->ToFile("adjList.txt");
+			std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
+			break;
+
+		case 2:
+			incMat->FromFile(path);
+			adjMat = AdjacencyMatrix::FromIncMatrix(*incMat);
+			adjList = AdjacencyList::FromAdjMatrix(*adjMat);
+
+			clrScr();
+
+			std::cout << "Liczba wierzcholkow: " << incMat->GetVertexNumber() << std::endl;
+			std::cout << "Liczba krawedzi: " << incMat->GetEdgesNumber() << std::endl;
+
+			std::cout << "\nMacierz sasiedztwa: " << std::endl;
+			adjMat->Show();
+			std::cout << "\nMacierz incydencji: " << std::endl;
+			incMat->Show();
+			std::cout << "\nLista sasiedztwa: " << std::endl;
+			adjList->Show();
+
+			adjMat->ToFile("adjMat.txt");
+			incMat->ToFile("incMat.txt");
+			adjList->ToFile("adjList.txt");
+			std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
+			break;
+
+		case 3:
+			adjList->FromFile(path);
+			incMat = IncidenceMatrix::FromAdjList(*adjList);
+			adjMat = AdjacencyMatrix::FromIncMatrix(*incMat);
+
+			clrScr();
+
+			std::cout << "Liczba wierzcholkow: " << adjList->GetVertexNumber() << std::endl;
+			std::cout << "Liczba krawedzi: " << adjList->GetEdgesNumber() << std::endl;
+
+			std::cout << "\nMacierz sasiedztwa: " << std::endl;
+			adjMat->Show();
+			std::cout << "\nMacierz incydencji: " << std::endl;
+			incMat->Show();
+			std::cout << "\nLista sasiedztwa: " << std::endl;
+			adjList->Show();
+
+			adjMat->ToFile("adjMat.txt");
+			incMat->ToFile("incMat.txt");
+			adjList->ToFile("adjList.txt");
+			std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
+			break;
+
+		default:
+			clrScr();
+
+			std::cout << "Zakonczono program." << std::endl;
+
+			break;
+		}
+	}
+	catch(...)
+	{
 		clrScr();
-
-		std::cout << "Liczba wierzcholkow: " << adjMat->GetVertexNumber() << std::endl;
-		std::cout << "Liczba krawedzi: " << adjMat->GetEdgesNumber() << std::endl;
-
-		std::cout << "\nMacierz sasiedztwa: " << std::endl;
-		adjMat->Show();
-		std::cout << "\nMacierz incydencji: " << std::endl;
-		incMat->Show();
-		std::cout << "\nLista sasiedztwa: " << std::endl;
-		adjList->Show();
-
-		adjMat->ToFile("adjMat.txt");
-		incMat->ToFile("incMat.txt");
-		adjList->ToFile("adjList.txt");
-		std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
-		break;
-
-	case 2:
-		incMat->FromFile(path);
-		adjMat = AdjacencyMatrix::FromIncMatrix(*incMat);
-		adjList = AdjacencyList::FromAdjMatrix(*adjMat);
-
-		clrScr();
-
-		std::cout << "Liczba wierzcholkow: " << incMat->GetVertexNumber() << std::endl;
-		std::cout << "Liczba krawedzi: " << incMat->GetEdgesNumber() << std::endl;
-
-		std::cout << "\nMacierz sasiedztwa: " << std::endl;
-		adjMat->Show();
-		std::cout << "\nMacierz incydencji: " << std::endl;
-		incMat->Show();
-		std::cout << "\nLista sasiedztwa: " << std::endl;
-		adjList->Show();
-
-		adjMat->ToFile("adjMat.txt");
-		incMat->ToFile("incMat.txt");
-		adjList->ToFile("adjList.txt");
-		std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
-		break;
-
-	case 3:
-		adjList->FromFile(path);
-		incMat = IncidenceMatrix::FromAdjList(*adjList);
-		adjMat = AdjacencyMatrix::FromIncMatrix(*incMat);
-
-		clrScr();
-
-		std::cout << "Liczba wierzcholkow: " << adjList->GetVertexNumber() << std::endl;
-		std::cout << "Liczba krawedzi: " << adjList->GetEdgesNumber() << std::endl;
-
-		std::cout << "\nMacierz sasiedztwa: " << std::endl;
-		adjMat->Show();
-		std::cout << "\nMacierz incydencji: " << std::endl;
-		incMat->Show();
-		std::cout << "\nLista sasiedztwa: " << std::endl;
-		adjList->Show();
-
-		adjMat->ToFile("adjMat.txt");
-		incMat->ToFile("incMat.txt");
-		adjList->ToFile("adjList.txt");
-		std::cout << "\nZapisano do plikow: \"adjMat.txt\", \"incMat.txt\", \"adjList.txt\"" << std::endl;
-		break;
-
-	default:
-		clrScr();
-
-		std::cout << "Zakonczono program." << std::endl;
-
-		break;
+		std::cout << "Wystapil blad. Sprawdz plik lub poprawnosc wpisywanych danych." << std::endl;
+		std::cout << "Wiecej informacji na temat formatu zapisu reprezentacji \nznajdziesz w pliku info.txt" << std::endl;
 	}
 
 	delete adjMat;
 	delete incMat;
 	delete adjList;
 
-	//Wywalic na linuksie!!!!!
+	//Wyrzucic na linuksie!
 	system("PAUSE");
 }
 

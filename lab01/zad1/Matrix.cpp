@@ -104,37 +104,40 @@ void Matrix::Show() const
 
 void Matrix::ToFile(const char* path) const
 {
-	FILE** newFile = new FILE*;
-	fopen_s(newFile, path, "w");
+	FILE* newFile;
+	fopen_s(&newFile, path, "w");
 
 	if (rows == columns)
 	{
-		fprintf(*newFile, "%d %d\n", rows, 0);
+		fprintf(newFile, "%d %d\n", rows, 0);
 	}
 	else
 	{
-		fprintf(*newFile, "%d %d\n", rows, columns);
+		fprintf(newFile, "%d %d\n", rows, columns);
 	}
 
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < columns; j++)
 		{
-			fprintf(*newFile, "%d ", matrix[i][j]);
+			fprintf(newFile, "%d ", matrix[i][j]);
 		}
-		fprintf(*newFile, "\n");
+		fprintf(newFile, "\n");
 	}
 
-	fclose(*newFile);
+	fclose(newFile);
 }
 
 void Matrix::FromFile(const char * path)
 {
-	FILE** newFile = new FILE*;
-	fopen_s(newFile, path, "r");
+	FILE* newFile;
+	if (fopen_s(&newFile, path, "r"))
+	{
+		throw - 1;
+	}
 
-	fscanf_s(*newFile, "%d %d", &rows, &columns);
-	fscanf_s(*newFile, "\n");
+	fscanf_s(newFile, "%d %d", &rows, &columns);
+	fscanf_s(newFile, "\n");
 	if (!columns)
 	{
 		columns = rows;
@@ -146,12 +149,12 @@ void Matrix::FromFile(const char * path)
 	{
 		for (int j = 0; j < columns; j++)
 		{
-			fscanf_s(*newFile, "%d", &matrix[i][j]);
+			fscanf_s(newFile, "%d", &matrix[i][j]);
 		}
-		fscanf_s(*newFile, "\n");
+		fscanf_s(newFile, "\n");
 	}
 
-	fclose(*newFile);
+	fclose(newFile);
 }
 
 Matrix Matrix::operator+(Matrix matrixB) const

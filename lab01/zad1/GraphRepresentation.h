@@ -17,7 +17,7 @@ protected:
 public:
 
 	//Konstruktory
-	GraphRepresentation(){}
+	GraphRepresentation() { this->vertexNumber = 0; this->edgesNumber = 0; }
 	GraphRepresentation(int vertexNumber, int edgesNumber){ this->vertexNumber = vertexNumber; this->edgesNumber = edgesNumber; }
 
 	//Destruktory

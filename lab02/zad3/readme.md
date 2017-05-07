@@ -1,1 +1,1 @@
-sprawdzanie czy graf jest hamiltonowski
+szukanie najwiekszej spojnej skladowej na grafie

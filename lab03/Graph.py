@@ -103,10 +103,40 @@ class Graph:
             print(path[0], end="\n\n")
 
     def get_minimal_distances(self):
-        pass
+        distance_matrix = []
+        for node in range(self.nodes):
+            distance_matrix.append([])
+            dijkstra_tab = self.dijkstra(node)
+            for data in dijkstra_tab:
+                distance_matrix[node].append(data[0])
 
-    def get_centre(self):
-        pass
+        return distance_matrix
+
+    def show_minimal_distances(self, distance_matrix):
+        for node in distance_matrix:
+            print("| ", end="")
+            for distance in node:
+                print(distance, " ", end="")
+            print("|\n", end="")
+        print(end="\n")
+
+    def get_centre(self, distance_matrix):
+        minimal_distance_sum = sum(distance_matrix[0])
+        centre = 0
+
+        it = 0
+        for node in distance_matrix:
+            if sum(node) < minimal_distance_sum:
+                minimal_distance_sum = sum(node)
+                centre = it
+            it += 1
+
+        return centre, minimal_distance_sum
+
+    def show_centre(self, data):
+        print("Centrum grafu:", data[0])
+        print("Suma odleglosci do pozostalych wierzcholkow:", data[1])
+        print(end="\n")
 
     def get_minimax(self):
         pass

@@ -103,10 +103,13 @@ class Graph:
             print(path[0], end="\n\n")
 
     def get_minimal_distances(self):
+        #Tworzymy pusta macierz odleglosci
         distance_matrix = []
+        #Dla kazdego wierzcholka robimy dijkstre
         for node in range(self.nodes):
             distance_matrix.append([])
             dijkstra_tab = self.dijkstra(node)
+            #Z otrzymanych tablic odczytujemy i przepisujemy odleglosci
             for data in dijkstra_tab:
                 distance_matrix[node].append(data[0])
 
@@ -125,12 +128,14 @@ class Graph:
         centre = 0
 
         it = 0
+        #Szukamy minimalnej sumy po wierszach macierzy
         for node in distance_matrix:
             if sum(node) < minimal_distance_sum:
                 minimal_distance_sum = sum(node)
                 centre = it
             it += 1
 
+        #Zwracamy krotke (centrum, suma_dystansow)
         return centre, minimal_distance_sum
 
     def show_centre(self, data):
@@ -138,8 +143,25 @@ class Graph:
         print("Suma odleglosci do pozostalych wierzcholkow:", data[1])
         print(end="\n")
 
-    def get_minimax(self):
-        pass
+    def get_minimax(self, distance_matrix):
+        min_max_distance = max(distance_matrix[0])
+        minimax = 0
+
+        it = 0
+        #Szukamy minimalnej najwiekszej odleglosci po wierszach macierzy
+        for node in distance_matrix:
+            if max(node) < min_max_distance:
+                min_max_distance = max(node)
+                minimax = it
+            it += 1
+
+        # Zwracamy krotke (centrum_minimax, najdluzszy_dystans)
+        return minimax, min_max_distance
+
+    def show_minimax(self, data):
+        print("Centrum minimax grafu:", data[0])
+        print("Najdluzsza odleglosc:", data[1])
+        print(end="\n")
 
     def get_mst(self):
         pass

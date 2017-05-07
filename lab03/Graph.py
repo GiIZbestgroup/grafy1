@@ -22,6 +22,11 @@ class Graph:
                     self.adjacencyMatrix[i].append(int(pos))
             i += 1
 
+        for row in self.adjacencyMatrix:
+            for pos in row:
+                if pos:
+                    self.edges += 1
+
     def set_values(self, min, max):
         i = 0
         for row in self.adjacencyMatrix:
@@ -61,7 +66,7 @@ class Graph:
             for neighbour in self.valueMatrix[neigh_queue[q_index]]:
                 if neighbour:
                     #Jesli sasiada nie ma w kolejce to dodajemy go
-                    if j in neigh_queue:
+                    if j not in neigh_queue:
                         neigh_queue.append(j)
                     #Jezeli dotychczasowy dystans do sasiada jest wiekszy niz
                     #dystans do aktualnie badanego wierzcholka + waga do sasiada
@@ -71,6 +76,9 @@ class Graph:
                 j += 1
             #Bedziemy sprawdzac nastepnego sasiada z kolejki
             q_index += 1
+
+            #Odkomentowac jezeli chcemy sprawdzic stan tabel w kolejnych iteracjach
+            #print(dijkstra_tab)
 
         #Zwracamy tablice dijkstry do innych metod
         return dijkstra_tab
@@ -90,8 +98,8 @@ class Graph:
             #Wypisujemy
             print("Odleglosc z", node, "do", i, "wynosi:", distance)
             print("Sciezka:", node, "--> ", end="")
-            for i in range(len(path) - 1, 1):
-                print(path[i], "--> ", end="")
+            for i in range(len(path) - 2):
+                print(path[(len(path) - 2) - i], "--> ", end="")
             print(path[0], end="\n\n")
 
     def get_minimal_distances(self):

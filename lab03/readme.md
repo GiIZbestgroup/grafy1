@@ -1,7 +1,7 @@
 ######Lab 03######
 ##################
 
-Zad01 - done\n
+Zad01 - done
 Zad02 - done
 Zad03 - done
 Zad04 - done

@@ -28,15 +28,18 @@ vector<vector<int> > findNeighbours(vector<vector<int> > connectionArray)
     return neighbours;
 }
 
-vector<int> findCC(vector<vector<int> > &_matrix)
-{
+vector<int> findCC(vector<vector<int> > &_matrix){
 
     vector<vector<int> > neighbours = findNeighbours(_matrix);
+    print(neighbours);
     int largestNumberOfNeighbors = 0; //liczba sasiadow
-    int first = 0; //numer pierwszego wierzcholka
-    vector<int> CC; //zwracany wektor, przechowuje numery wierzcholkow nalezace do najwiekszej spojnej skladowej
-    //zawsze minimum 1 wierzcholek
-    //gdzy >1 wierzcholek, to na koncu wierzcholek, od ktorego zaczynalismy, np 0 -> 1 -> 2 -> 0
+    int first = 0;
+    vector<int> CC;
+    int visited[_matrix.size()];
+    for (int i = 0; i<_matrix.size(); ++i)
+    {
+        visited[i] = 0;
+    }
 
     for(unsigned int i = 0 ; i < neighbours.size(); ++i)
     {
@@ -47,10 +50,28 @@ vector<int> findCC(vector<vector<int> > &_matrix)
                 CC.pop_back();
             first = i;
             CC.push_back(first);
+            visited[first] = 1;
             for (unsigned int j = 0; j < neighbours[i].size(); ++j)
+            {
                 CC.push_back(neighbours[i][j]);
+                visited[neighbours[i][j]] = 1;
+            }
         }
     }
+
+    for (unsigned int i = 1; i < neighbours.size(); ++i)
+    {
+        for (unsigned int j = 1; j < neighbours[i].size(); ++j) //pierwszego nie sprawdzamy
+        {
+            if ( visited[neighbours[i][j]] == 0)
+            {
+                CC.insert(CC.end(), neighbours[i][j]);
+                visited[neighbours[i][j]] = 1;
+                continue;
+            }
+        }
+    }
+
     CC.push_back(first);
     return CC;
 }

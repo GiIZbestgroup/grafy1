@@ -22,6 +22,8 @@ class Graph:
                     self.adjacencyMatrix[i].append(int(pos))
             i += 1
 
+        new_file.close()
+
         for row in self.adjacencyMatrix:
             for pos in row:
                 if pos:
@@ -29,6 +31,7 @@ class Graph:
 
     def set_values(self, min, max):
         i = 0
+        #Gdy krawedz istnieje to przypisujemy losowa wage z zakresu min, max
         for row in self.adjacencyMatrix:
             self.valueMatrix.append([])
             for pos in row:
@@ -37,6 +40,11 @@ class Graph:
                 else:
                     self.valueMatrix[i].append(0)
             i += 1
+
+        #Gdy chcemy uzyskac graf nieskierowany
+        for i in range(self.nodes):
+            for j in range(i, self.nodes):
+                self.valueMatrix[j][i] = self.valueMatrix[i][j]
 
     def show(self):
         for row in self.adjacencyMatrix:
@@ -163,5 +171,48 @@ class Graph:
         print("Najdluzsza odleglosc:", data[1])
         print(end="\n")
 
-    def get_mst(self):
-        pass
+    def prim(self):
+        #Tworzymy pusta liste odwiedzonych wierzcholkow i wybieramy startowy
+        visited = []
+        visited.append(0)
+
+        #Tworzymy macierz sasiedztwa dla drzewa rozpinajacego
+        mst_three_matrix = [[0 for _ in range(self.nodes)] for _ in range(self.nodes)]
+
+        #Dopoki nie odwiedzilismy wszystkich wierzcholkow
+        while not len(visited) == self.nodes:
+            #Szukamy najkrotszej krawedzi
+            data = self.get_minimal_edge(visited)
+            #Wpisujemy do macierzy
+            mst_three_matrix[data[1]][data[2]] = data[0]
+            mst_three_matrix[data[2]][data[1]] = data[0]
+            #Dodajemy nowy wierzcholek do listy odwiedzonych
+            visited.append(data[2])
+
+        #Zwracamy macierz sasiedztwa minimalnego drzewa rozpinajacego
+        return mst_three_matrix
+
+    def get_minimal_edge(self, nodes):
+        #Przyjmuje sobie jakas poczatkowa "nieskonczona" wage
+        min_edge = (999999, -1, -1)
+        #Idac po wierzcholkach w liscie dostepnych
+        for node in nodes:
+            j = 0
+            for edge in self.valueMatrix[node]:
+                #Jezeli krawedz istnieje, jest mniejsza, niz aktualna minimalna
+                #oraz nie laczy z wierzcholkiem, do ktorego juz mamy polaczenie
+                if edge and edge < min_edge[0] and j not in nodes:
+                    #Przepisujemy wartosc
+                    #Krotka (waga, z, dokad (NOWY WIERZCHOLEK))
+                    min_edge = (edge, node, j)
+                j += 1
+        return min_edge
+
+    def show_mst(self, mst_matrix):
+        for node in mst_matrix:
+            print("| ", end="")
+            for distance in node:
+                print(distance, " ", end="")
+            print("|\n", end="")
+        print(end="\n")
+        print("Waga drzewa:", sum([sum(row) for row in mst_matrix])//2, end="\n")

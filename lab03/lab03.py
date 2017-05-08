@@ -1,5 +1,10 @@
 from Graph import Graph
+from GraphGenerator import GraphGenerator
 
+
+generator = GraphGenerator()
+generator.generate(100)
+generator.to_file("graph.txt")
 
 graph = Graph()
 graph.from_file("graph.txt")
@@ -12,3 +17,4 @@ graph.show_dijkstra_tab(0, graph.dijkstra(0))
 graph.show_minimal_distances(graph.get_minimal_distances())
 graph.show_centre(graph.get_centre(graph.get_minimal_distances()))
 graph.show_minimax(graph.get_minimax(graph.get_minimal_distances()))
+graph.show_mst(graph.prim())

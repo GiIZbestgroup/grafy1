@@ -7,7 +7,7 @@ Zad03 - done
 Zad04 - done
 Zad05 - done
 
-Sprawdzanie błędow - w toku (chyba brak)
+Sprawdzanie błędow - done
 Wizualizacja - done
-Interfejs - w toku
-Walidacja - nie wiem nawet czy potrzebna
+Interfejs - done
+Walidacja - done

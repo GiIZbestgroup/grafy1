@@ -1,5 +1,6 @@
 from Graph import Graph
 from GraphGenerator import GraphGenerator
+from time import clock
 
 
 print("#####################")
@@ -45,6 +46,8 @@ except:
 
 while(choice):
     if(choice == 1):
+        now = clock()
+
         print("################################################################\n")
 
         print("Wygenerowany, losowy graf spojny")
@@ -79,6 +82,10 @@ while(choice):
 
         print("################################################################\n")
 
+        print("Wykonano w: {0:02f}s \n".format(clock() - now))
+
+        print("################################################################\n")
+
         print("Co chcesz zrobic?")
         print("1 - Wypisac wszystkie dane")
         print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
@@ -91,6 +98,8 @@ while(choice):
             choice = 0
 
     elif(choice == 2):
+        now = clock()
+
         print("################################################################\n")
 
         print("Najkrotsze sciezki z wierzcholka 0")
@@ -102,6 +111,10 @@ while(choice):
 
         graph.show_centre(graph.get_centre(minimal_distances))
         graph.show_minimax(graph.get_minimax(minimal_distances))
+
+        print("################################################################\n")
+
+        print("Wykonano w: {0:02f}s \n".format(clock() - now))
 
         print("################################################################\n")
 

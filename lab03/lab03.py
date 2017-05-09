@@ -36,6 +36,7 @@ graph.set_values(1, 10)
 print("Co chcesz zrobic?")
 print("1 - Wypisac wszystkie dane")
 print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
+print("3 - Wylosowac nowy graf")
 print("0 - Wyjsc")
 
 try:
@@ -89,6 +90,7 @@ while(choice):
         print("Co chcesz zrobic?")
         print("1 - Wypisac wszystkie dane")
         print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
+        print("3 - Wylosowac nowy graf")
         print("0 - Wyjsc")
 
         try:
@@ -121,6 +123,40 @@ while(choice):
         print("Co chcesz zrobic?")
         print("1 - Wypisac wszystkie dane")
         print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
+        print("3 - Wylosowac nowy graf")
+        print("0 - Wyjsc")
+
+        try:
+            choice = int(float(input()))
+        except:
+            print("Niepoprawny wybor, program zakonczy sie.")
+            choice = 0
+
+    elif(choice == 3):
+        try:
+            print("Podaj liczbe wierzcholkow:")
+            nodes = int(float(input()))
+            while nodes < 3:
+                print("Zbyt mala liczba wierzcholkow! Podaj inna:")
+                nodes = int(input())
+        except:
+            print("Podana zla liczbe wierzcholkow! Przyjeto domyslnie 5")
+            nodes = 5
+
+        generator = GraphGenerator()
+        generator.generate(nodes)
+        generator.to_file("graph.txt")
+
+        graph = Graph()
+        graph.from_file("graph.txt")
+        graph.set_values(1, 10)
+
+        print("################################################################\n")
+
+        print("Wylosowales nowy graf. Co chcesz zrobic?")
+        print("1 - Wypisac wszystkie dane")
+        print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
+        print("3 - Wylosowac nowy graf")
         print("0 - Wyjsc")
 
         try:
@@ -135,6 +171,7 @@ while(choice):
         print("Zly wybor! 2\Co chcesz zrobic?")
         print("1 - Wypisac wszystkie dane")
         print("2 - Wypisac dane bez macierzy (gdy liczba wierzcholkow jest duza)")
+        print("3 - Wylosowac nowy graf")
         print("0 - Wyjsc")
 
         try:

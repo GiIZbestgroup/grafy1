@@ -50,14 +50,14 @@ class Graph:
         for row in self.adjacencyMatrix:
             print("| ", end="")
             for pos in row:
-                print(pos, " ", end="")
+                print(pos, "", end="")
             print("|\n", end="")
 
     def show_value(self):
         for row in self.valueMatrix:
             print("| ", end="")
             for pos in row:
-                print(pos, " ", end="")
+                print(pos, "", end="")
             print("|\n", end="")
 
     def dijkstra(self, node):
@@ -127,7 +127,7 @@ class Graph:
         for node in distance_matrix:
             print("| ", end="")
             for distance in node:
-                print(distance, " ", end="")
+                print(distance, "", end="")
             print("|\n", end="")
         print(end="\n")
 
@@ -212,7 +212,8 @@ class Graph:
         for node in mst_matrix:
             print("| ", end="")
             for distance in node:
-                print(distance, " ", end="")
+                print(distance, "", end="")
             print("|\n", end="")
         print(end="\n")
         print("Waga drzewa:", sum([sum(row) for row in mst_matrix])//2, end="\n")
+        print(end="\n")

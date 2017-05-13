@@ -146,25 +146,24 @@ std::vector<std::vector<int>> Generator::randomRegular(int numberofNodes, int& n
 
 	for (int i = 0; i < numberofNodes; i++)
 	{
-		while (countOnes(connectionArray[i]) != degree)
+		while (countOnes(connectionArray[i]) < degree)
 		{
 			int tmp = rand() % numberofNodes;
 
-			if (tmp != i)
+			if (!connectionArray[i][tmp] && !connectionArray[tmp][i] && countOnes(connectionArray[tmp]) != degree)
 			{
-				connectionArray[i][tmp] = 1;
-				connectionArray[tmp][i] = 1;
-				numberofEdges++;
+				if (tmp != i)
+				{
+					connectionArray[i][tmp] = 1;
+					connectionArray[tmp][i] = 1;
+					numberofEdges++;
+				}
+				else
+				{
+					connectionArray[i][tmp] = 0;
+				}
 			}
-			else
-			{
-				connectionArray[i][tmp] = 0;
-				connectionArray[tmp][i] = 0;
-			}
-
-//			std::cout << connectionArray[i][j] << " ";
 		}
-		std::cout << std::endl;
 	}
 
 	for (int i = 0; i < numberofNodes; i++)
@@ -173,6 +172,15 @@ std::vector<std::vector<int>> Generator::randomRegular(int numberofNodes, int& n
 		{
 			connectionArray[i][j] = 0;
 		}
+	}
+
+	for (int i = 0; i < numberofNodes; i++)
+	{
+		for (int j = 0; j < numberofNodes; j++)
+		{
+			std::cout << connectionArray[i][j] << " ";		
+		}
+		std::cout << std::endl;
 	}
 
 	return connectionArray;
@@ -186,25 +194,24 @@ std::vector<std::vector<int>> Generator::fullyRandomRegular(int maxNodeNumber, i
 
 	for (int i = 0; i < numberofNodes; i++)
 	{
-		while (countOnes(connectionArray[i]) != degree)
+		while (countOnes(connectionArray[i]) < degree)
 		{
 			int tmp = rand() % numberofNodes;
 
-			if (tmp != i)
+			if (!connectionArray[i][tmp] && !connectionArray[tmp][i] && countOnes(connectionArray[tmp]) != degree)
 			{
-				connectionArray[i][tmp] = 1;
-				connectionArray[tmp][i] = 1;
-				numberofEdges++;
+				if (tmp != i)
+				{
+					connectionArray[i][tmp] = 1;
+					connectionArray[tmp][i] = 1;
+					numberofEdges++;
+				}
+				else
+				{
+					connectionArray[i][tmp] = 0;
+				}
 			}
-			else
-			{
-				connectionArray[i][tmp] = 0;
-				connectionArray[tmp][i] = 0;
-			}
-
-			//			std::cout << connectionArray[i][j] << " ";
 		}
-		std::cout << std::endl;
 	}
 
 	for (int i = 0; i < numberofNodes; i++)
@@ -213,6 +220,15 @@ std::vector<std::vector<int>> Generator::fullyRandomRegular(int maxNodeNumber, i
 		{
 			connectionArray[i][j] = 0;
 		}
+	}
+
+	for (int i = 0; i < numberofNodes; i++)
+	{
+		for (int j = 0; j < numberofNodes; j++)
+		{
+			std::cout << connectionArray[i][j] << " ";
+		}
+		std::cout << std::endl;
 	}
 
 	return connectionArray;

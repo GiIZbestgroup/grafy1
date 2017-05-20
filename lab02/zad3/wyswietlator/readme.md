@@ -1,0 +1,1 @@
+Szukanie NSP z grafika

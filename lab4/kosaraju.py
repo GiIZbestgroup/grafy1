@@ -1,3 +1,5 @@
+import numpy.matrix as matrix
+
 def DFStack(start, visited, S, graph):
     visited[start] = True
     for i in range(len(graph[start])):
@@ -20,6 +22,7 @@ def kosaraju(nodes, graph):
     for v in range(nodes):
         if not visited[v]:
             DFStack(v, visited, S, graph)
+    graph.transpose()
     visited = [False for _ in range(nodes)]
     cn = 0
     while S:
@@ -31,17 +34,14 @@ def kosaraju(nodes, graph):
         DFSprint(v, visited, graph)
 
 
-path = input("Podaj Å›cieÅ¼kÄ™ pliku: ")
+path = input("Podaj œcie¿kê pliku: ")
 graph = open(path, "r+")
-matrix = graph.readlines()
-for i in range(len(matrix)):
-    matrix[i] = matrix[i].split()
+graph_matr = graph.readlines()[1:]
+for i in range(len(graph_matr)):
+    graph_matr[i] = graph_matr[i].split()
 
-# for i in range(len(matrix)):
-#     print(matrix[i])
+graph_matr = matrix(graph_matr)
 
-#visited = [False for _ in range(len(matrix))]
-
-kosaraju(len(matrix), matrix)
+kosaraju(len(graph_matr), graph_matr)
 
 graph.close()

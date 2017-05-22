@@ -1,19 +1,17 @@
-#import numpy as np
-
-def DFStack(start, visited, S, graph):
-    visited[start] = True
-    for i in range(len(graph[start])):
-        if graph[start][i] and not visited[i]:
-            DFStack(i, visited, S, graph)
-    S.append(start)
+def DFSstack(v, visited, S, graph):
+    visited[v] = True
+    for u in range(len(graph[v])):
+        if graph[v][u] != 0 and not visited[u]:
+            DFSstack(u, visited, S, graph)
+    S.append(v)
 
 
-def DFSprint(start, visited, graph):
-    visited[start] = True
-    print(start)
-    for i in range(len(graph[start])):
-        if graph[start][i] and not visited[i]:
-            DFSprint(i, visited, graph)
+def DFSprint(v, visited, graph):
+    visited[v] = True
+    print(str(v) + " ", end='')
+    for u in range(len(graph[v])):
+        if graph[v][u] == 1 and not visited[u]:
+            DFSprint(u, visited, graph)
 
 
 def transpose(graph):
@@ -29,7 +27,7 @@ def kosaraju(nodes, graph):
     S = []
     for v in range(nodes):
         if not visited[v]:
-            DFStack(v, visited, S, graph)
+            DFSstack(v, visited, S, graph)
     graph = transpose(graph)
     visited = [False for _ in range(nodes)]
     cn = 0
@@ -38,17 +36,20 @@ def kosaraju(nodes, graph):
         if visited[v]:
             continue
         cn += 1
-        print("SCC " + str(cn) + ": ")
+        print("SCC " + str(cn) + ": ", end='')
         DFSprint(v, visited, graph)
+        print('\n')
 
 
-path = input("Podaj œcie¿kê pliku: ")
+path = input("Podaj sciezke pliku: ")
 graph = open(path, "r+")
 graph_matr = graph.readlines()[1:]
 for i in range(len(graph_matr)):
     graph_matr[i] = graph_matr[i].split()
 
-#graph_matr = np.matrix(graph_matr)
+for i in range(len(graph_matr)):
+    for j in range(len(graph_matr[i])):
+        graph_matr[i][j] = int(graph_matr[i][j])
 
 kosaraju(len(graph_matr), graph_matr)
 

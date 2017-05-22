@@ -1,0 +1,5 @@
+odswiezona wersja programu konsolowego, ktory potrafi:
+-wypisywac najwieksza spojna skladowa
+-sprawdzac czy graf jest eulerowski
+-wypisywac sciezke Eulera
+-robic rzeczy hamiltonowskie

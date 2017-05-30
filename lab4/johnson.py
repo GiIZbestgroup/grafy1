@@ -1,54 +1,53 @@
-from random import randint
 from zad3 import bellmanford
+from Graph import Graph
 
-def potential(graph, nodes):
+
+def potential(graph):
     #dodanie nowego wierzcholka, polaczonego z kazdym innym sciezkami o wadze 0
-    for i in range(nodes):
-        graph[i].append('x')
-    nodes += 1
-    graph.append([0 for _ in range(nodes)])
+    for i in range(graph.nodes):
+        graph.adjacencyMatrix[i].append(0)
+    graph.nodes += 1
+    graph.adjacencyMatrix.append([1 for _ in range(graph.nodes)])
+
+    for i in range(graph.nodes):
+        graph.valueMatrix[i].append(0)
+    graph.nodes += 1
+    graph.valueMatrix.append([0 for _ in range(graph.nodes)])
 
     #wykonanie algorytmu Bellmana-Forda na tym wierzcholku
-    bf = bellmanford(graph, nodes - 1)
+    bf = bellmanford(graph.adjacencyMatrix, graph.nodes - 1)
     if not bf[0]:
         return False
     else:
         return bf[1]
 
 
-def johnson(G, n):
-    d = potential(G, n)
+def johnson(graph):
+    d = potential(graph)
     if not d:
         return False
-    for i in range(n):
-        for j in range(n):
-            if type(G[i][j]) is int:
-                G[i][j] += (d[i] - d[j])
+    for i in range(graph.nodes):
+        for j in range(graph.nodes):
+            if graph.adjacencyMatrix[i][j]:
+                graph.valueMatrix[i][j] += (d[i] - d[j])
 
-    for i in range(n):
-        #zrób Dijkstrę
+    for i in range(graph.nodes):
+        graph.show_dijkstra_tab(i, graph.dijkstra(i))
 
-    for i in range(n):
-        for j in range(n):
-            if type(G[i][j]) is int:
-                G[i][j] += (d[j] - d[i])
+    for i in range(graph.nodes):
+        for j in range(graph.nodes):
+            if graph.adjacencyMatrix[i][j]:
+                graph.valueMatrix[i][j] += (d[i] - d[j])
 
+    return d
 
+##########################################
 
+Graph1 = Graph()
 
 path = input("Podaj sciezke pliku: ")
-graph = open(path, "r+")
-graph_matr = graph.readlines()[1:]
-for i in range(len(graph_matr)):
-    graph_matr[i] = graph_matr[i].split()
+Graph1.from_file(path)
+Graph1.set_values(-3, 10)
 
-for i in range(len(graph_matr)):
-    for j in range(len(graph_matr[i])):
-        graph_matr[i][j] = int(graph_matr[i][j])
-        graph_matr[i][j] *= randint(-2, 10)
-
-        if not graph_matr[i][j]:
-            graph_matr[i][j] = 'x'
-
-graph.close()
-
+potential(Graph1)
+johnson(Graph1)

@@ -42,9 +42,9 @@ class Graph:
             i += 1
 
         #Gdy chcemy uzyskac graf nieskierowany
-        for i in range(self.nodes):
-            for j in range(i, self.nodes):
-                self.valueMatrix[j][i] = self.valueMatrix[i][j]
+#        for i in range(self.nodes):
+#            for j in range(i, self.nodes):
+#                self.valueMatrix[j][i] = self.valueMatrix[i][j]
 
     def show(self):
         for row in self.adjacencyMatrix:
@@ -93,7 +93,7 @@ class Graph:
 
     def show_dijkstra_tab(self, node, dijkstra_tab):
         #Ustalamy sciezki + dlugosci
-        for i in range(self.nodes):
+        for i in range(self.nodes-1):
             path = []
             distance = dijkstra_tab[i][0]
             prev = i
@@ -104,10 +104,14 @@ class Graph:
                 prev = dijkstra_tab[prev][1]
 
             #Wypisujemy
-            print("Odleglosc z", node, "do", i, "wynosi:", distance)
-            print("Sciezka:", node, "--> ", end="")
-            for i in range(len(path) - 2):
-                print(path[(len(path) - 2) - i], "--> ", end="")
+            if distance == 999:
+                print("Brak sciezki z", node, "do", i)
+            else:
+                print("Odleglosc z", node, "do", i, "wynosi:", distance)
+                print("Sciezka:", node, "--> ", end="")
+
+                for i in range(len(path) - 2):
+                    print(path[(len(path) - 2) - i], "--> ", end="")
             print(path[0], end="\n\n")
 
     def get_minimal_distances(self):

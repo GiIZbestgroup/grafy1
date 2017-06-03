@@ -9,9 +9,8 @@ def potential(graph):
     graph.nodes += 1
     graph.adjacencyMatrix.append([1 for _ in range(graph.nodes)])
 
-    for i in range(graph.nodes):
+    for i in range(len(graph.valueMatrix[0])):
         graph.valueMatrix[i].append(0)
-    graph.nodes += 1
     graph.valueMatrix.append([0 for _ in range(graph.nodes)])
 
     #wykonanie algorytmu Bellmana-Forda na tym wierzcholku
@@ -20,6 +19,9 @@ def potential(graph):
         return False
     else:
         return bf[1]
+
+def remove(graph):
+    pass
 
 
 def johnson(graph):
@@ -31,7 +33,7 @@ def johnson(graph):
             if graph.adjacencyMatrix[i][j]:
                 graph.valueMatrix[i][j] += (d[i] - d[j])
 
-    for i in range(graph.nodes):
+    for i in range(graph.nodes-1):
         graph.show_dijkstra_tab(i, graph.dijkstra(i))
 
     for i in range(graph.nodes):
@@ -49,5 +51,8 @@ path = input("Podaj sciezke pliku: ")
 Graph1.from_file(path)
 Graph1.set_values(-3, 10)
 
-potential(Graph1)
+Graph1.show()
+print()
+Graph1.show_value()
+print()
 johnson(Graph1)

@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, randrange
 
 
 class Graph:
@@ -36,7 +36,10 @@ class Graph:
             self.valueMatrix.append([])
             for pos in row:
                 if int(pos):
-                    self.valueMatrix[i].append(randint(min, max))
+                    if(randrange(90)%15==0):
+                        self.valueMatrix[i].append(randint(min, 0))
+                    else:
+                        self.valueMatrix[i].append(randint(0, max))
                 else:
                     self.valueMatrix[i].append(0)
             i += 1
@@ -105,14 +108,16 @@ class Graph:
 
             #Wypisujemy
             if distance == 999:
-                print("Brak sciezki z", node, "do", i)
+                print("Brak sciezki z", node+1, "do", i+1)
             else:
-                print("Odleglosc z", node, "do", i, "wynosi:", distance)
-                print("Sciezka:", node, "--> ", end="")
+                print("Odleglosc z", node+1, "do", i+1, "wynosi:", distance)
+                print("Sciezka:", node+1, "--> ", end="")
 
                 for i in range(len(path) - 2):
-                    print(path[(len(path) - 2) - i], "--> ", end="")
-            print(path[0], end="\n\n")
+                    print(path[(len(path) - 2) - i]+1, "--> ", end="")
+            print(path[0]+1, end="\n\n")
+
+
 
     def get_minimal_distances(self):
         #Tworzymy pusta macierz odleglosci
@@ -131,6 +136,8 @@ class Graph:
         for node in distance_matrix:
             print("| ", end="")
             for distance in node:
+                if distance == 999:
+                    distance = "X"
                 print(distance, "", end="")
             print("|\n", end="")
         print(end="\n")

@@ -55,7 +55,7 @@ void GraphicObjects::createPoints(std::vector<int> layers,int numberofNodes,int 
 
 }
 
-void GraphicObjects::createNames(int numberofNodes,int nodesperLattice, float latticesProportion,std::vector<Point> &points,std::vector<sf::Text> &names,sf::Font &font)
+void GraphicObjects::createNames(bool numerateEdges,std::vector<std::vector<int>> &connectionArray,int numberofNodes,int nodesperLattice, float latticesProportion,std::vector<Point> &points,std::vector<sf::Text> &names,sf::Font &font)
 {
 
 	for(int i=0;i<numberofNodes;i++)
@@ -68,7 +68,33 @@ void GraphicObjects::createNames(int numberofNodes,int nodesperLattice, float la
        names[i].setCharacterSize(14);
        names[i].setOrigin(6,6);
        names[i].setPosition(points[i].x_cord+13*cos(static_cast<float>(i)*2*M_PI/static_cast<float>(numberofNodes)),points[i].y_cord+13*sin(static_cast<float>(i)*2*M_PI/static_cast<float>(numberofNodes)));
+       if(numerateEdges)
+       names[i].setColor(sf::Color::Red);
+       else
        names[i].setColor(sf::Color::Black);
+    }
+
+    int numberofweightsadded = 0;
+
+    if(numerateEdges)
+    for(int i=0;i<numberofNodes;i++)
+    {
+        for(int j=0;j<numberofNodes;j++)
+        {
+            if(connectionArray[i][j]!=0)
+            {
+               numberofweightsadded++;
+               names.push_back(sf::Text());
+               std::ostringstream ss2;
+               ss2<<connectionArray[i][j];
+               names[numberofNodes+numberofweightsadded-1].setString(ss2.str()); 
+               names[numberofNodes+numberofweightsadded-1].setFont(font);
+               names[numberofNodes+numberofweightsadded-1].setCharacterSize(14);
+               names[numberofNodes+numberofweightsadded-1].setOrigin(6,6);
+               names[numberofNodes+numberofweightsadded-1].setPosition((1.0*points[i].x_cord+2.0*points[j].x_cord)/3.0,(1.0*points[i].y_cord+2.0*points[j].y_cord)/3.0);
+               names[numberofNodes+numberofweightsadded-1].setColor(sf::Color::Black);
+            }
+        }
     }
 }
 

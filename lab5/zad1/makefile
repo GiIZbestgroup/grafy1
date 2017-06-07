@@ -14,7 +14,7 @@ OBJ=$(SRC:.cpp=.o)
 DEP=$(OBJ:.o=.d)
 
 #nazwa programu
-NAME = main
+NAME = wyswietl
 
 #nazwa folderu dla plików obiektowych i zależności
 OBJDIR := obj
@@ -34,7 +34,7 @@ all: $(OBJDIR) $(NAME)
 
 # to chyba jasne main zależy od plików obiektowych( odpowiednia ścieżka)
 # kompilacja z flagami do linkowania ( domyślnie ustawione) wszystkie pliki obiektowe i generuj plik wynikowy do pliku o nazwie takiej jak nazwa etykiety( w tym przypadku main)	
-main: $(OBJS)
+$(NAME): $(OBJS)
 	$(CXX) $(LFLAGS) $^ -o $@ -lsfml-graphics -lsfml-window -lsfml-system
 
 # tu tworzymy pliki obiektowe i pliki zależności 

@@ -13,6 +13,8 @@
 #include "Generator.h"
 #include "GraphicObjects.h"
 
+void clrScr() { system("clear"); } 
+
 std::vector <std::vector<int>> fromfile(int& numberofNodes,int& numberofEdges,std::vector<int> &layers)
 {
         std::ifstream file("adjMat.txt");
@@ -115,8 +117,21 @@ int main()
      int choice;
      std::cin>>choice;
      std::cout<<std::endl;
+     clrScr();
+     std::cout<<"Czy nuumerować wagi na grafie (gdy nie jest rzadki to może być dosyć nieczytelne)(y/n)?\n";
+     char choice2;
+     std::cin>>choice2;
+     std::cout<<std::endl;
+     clrScr();
      std::vector<std::vector<int>> connectionArray;
      std::vector<int> layers;
+
+     bool numerateEdges;
+
+     if(choice2 == 'y')
+        numerateEdges=true;
+     else
+        numerateEdges=false;
 
      switch(choice)
      {
@@ -148,7 +163,7 @@ int main()
 
     //Stworzenie punktów i podpisów (obiektów graficznych) wedle parametrów danych wyżej
     GraphicObjects::createPoints(layers, numberofNodes, nodesperLattice, latticesProportion, points);
-    GraphicObjects::createNames(numberofNodes, nodesperLattice, latticesProportion, points, names, font);
+    GraphicObjects::createNames(numerateEdges,connectionArray,numberofNodes, nodesperLattice, latticesProportion, points, names, font);
 
     //Wygenerowanie obiektów graficznych dla łuków łaczących węzły na podstawie wcześniej wygenerowanej
     //macierzy sąsiedztwa
@@ -185,9 +200,21 @@ int main()
         for(int i=0;i<numberofNodes;i++)
         {
             window.draw(points[i].point_graphic);
-            window.draw(names[i]);
+
         }
 
+        if(numerateEdges)
+        for(int i=0;i<(numberofNodes+numberofEdges);i++)
+        {
+            window.draw(names[i]);
+        }
+        else
+        {
+            for(int i=0;i<numberofNodes;i++)
+            {
+                window.draw(names[i]);
+            }
+        }
         //Wyświetla wyrysowane w buforze obiekty graficzne na ekran
         window.display();
     }

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from random import randrange
+import sys
 
 def transpose(graph):
     temp = [[] for _ in range(len(graph[0]))]
@@ -61,16 +62,33 @@ def graphIsCorrect(filledGraph):
 
 	return isCorrect
 
-def addRandomEdges(graphMatrix,howmany):
+def sumGraph(graph):
+
+	suma = 0
+
+	for k in graph:
+		suma += sum(k)
+
+	return suma
+
+def addRandomEdges(canAddBackwardsIfAlreadyExistForwardEdge,graphMatrix,howmany):
 
 	counter = 0
 
-	while counter < howmany:
-		number_x = randrange(1,len(graphMatrix)-1)
-		number_y = randrange(1,len(graphMatrix)-1)
-		if (graphMatrix[number_x][number_y] == 0) and (number_x != number_y):
-			graphMatrix[number_x][number_y] = 1
-			counter += 1
+	if canAddBackwardsIfAlreadyExistForwardEdge:
+		while counter < howmany and sumGraph(graphMatrix) < len(graphMatrix)*(len(graphMatrix)-2):
+			number_x = randrange(1,len(graphMatrix)-1)
+			number_y = randrange(1,len(graphMatrix)-1)
+			if (graphMatrix[number_x][number_y] == 0) and (number_x != number_y):
+				graphMatrix[number_x][number_y] = 1
+				counter += 1
+	else:
+		while counter < howmany and sumGraph(graphMatrix) < (len(graphMatrix)-2)/2*(len(graphMatrix)-2):
+			number_x = randrange(1,len(graphMatrix)-1)
+			number_y = randrange(1,len(graphMatrix)-1)
+			if (graphMatrix[number_x][number_y] == 0 and graphMatrix[number_y][number_x] == 0) and (number_x != number_y):
+				graphMatrix[number_x][number_y] = 1
+				counter += 1
 
 
 def saveGraph(graphMatrix,verticesInLayers,name):
@@ -111,9 +129,12 @@ print("Liczby wierzchołków w warstwach pośrenich: ",verticesInLayers,"\nSuma 
 graphMatrix = createGraphMatrix(verticesInLayers)
 
 print("Macierz",len(graphMatrix),"x",len(graphMatrix[0]),'\n')
+
 print("1 - zapisz przed dodaniem losowych 2N krawędzi\n2 - zapisz po dodaniu 2N krawędzi, ale przed dodaniem wag\n3 - zapisz z wagami \n")
 
 decision = int(input())
+
+print()
 
 while(not graphIsCorrect(graphMatrix)):
 	fillMatrix(graphMatrix,verticesInLayers,50)
@@ -128,8 +149,20 @@ print("\nOgólna liczba krawędzi przed dodaniem losowych: ",suma,'\n',sep='')
 
 if decision == 1:
 	saveGraph(graphMatrix,verticesInLayers,"adjMat.txt")
+	sys.exit(0)
 
-addRandomEdges(graphMatrix,2*layers)
+print("Czy dopuszczamy generowanie łuków pomiędzy wierzchołkami, między którymi istnieje łuk, ale w drugą stronę przy generowaniu losowych?(y/n): ",end='')
+
+decision2 = input()
+
+print()
+
+if decision2 == 'y':
+	decision2 = True
+if decision2 == 'n':
+	decision2 = False
+
+addRandomEdges(decision2,graphMatrix,2*layers)
 
 suma = 0
 
@@ -141,6 +174,7 @@ print("\nOgólna liczba krawędzi po dodaniu losowych: ",suma,'\n',sep='')
 
 if decision == 2:
 	saveGraph(graphMatrix,verticesInLayers,"adjMat.txt")
+	sys.exit(0)
 
 addRandomWeight(graphMatrix)
 
@@ -153,3 +187,4 @@ print('')
 
 if decision == 3:
 	saveGraph(graphMatrix,verticesInLayers,"adjMat.txt")
+	sys.exit(0)

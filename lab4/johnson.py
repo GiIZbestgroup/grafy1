@@ -23,6 +23,7 @@ def potential(graph):
 def johnson(graph):
     d = potential(graph)
     if not d[0]:
+        print("Cykl ujemny, koncze dzialanie.")
         return False
     for i in range(graph.nodes):
         for j in range(graph.nodes):

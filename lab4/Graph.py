@@ -74,15 +74,15 @@ class Graph:
 
         while q_index < len(neigh_queue):
             j = 0
-            for neighbour in self.valueMatrix[neigh_queue[q_index]]:
-                if neighbour:
+            for neighbour in range(len(self.valueMatrix[neigh_queue[q_index]])):
+                if self.adjacencyMatrix[neigh_queue[q_index]][neighbour]:
                     #Jesli sasiada nie ma w kolejce to dodajemy go
                     if j not in neigh_queue:
                         neigh_queue.append(j)
                     #Jezeli dotychczasowy dystans do sasiada jest wiekszy niz
                     #dystans do aktualnie badanego wierzcholka + waga do sasiada
-                    if dijkstra_tab[j][0] > dijkstra_tab[neigh_queue[q_index]][0] + neighbour:
-                        dijkstra_tab[j][0] = dijkstra_tab[neigh_queue[q_index]][0] + neighbour
+                    if dijkstra_tab[j][0] > dijkstra_tab[neigh_queue[q_index]][0] + self.valueMatrix[neigh_queue[q_index]][neighbour]:
+                        dijkstra_tab[j][0] = dijkstra_tab[neigh_queue[q_index]][0] + self.valueMatrix[neigh_queue[q_index]][neighbour]
                         dijkstra_tab[j][1] = neigh_queue[q_index]
                 j += 1
             #Bedziemy sprawdzac nastepnego sasiada z kolejki
@@ -96,7 +96,7 @@ class Graph:
 
     def show_dijkstra_tab(self, node, dijkstra_tab):
         #Ustalamy sciezki + dlugosci
-        for i in range(self.nodes-1):
+        for i in range(self.nodes):
             path = []
             distance = dijkstra_tab[i][0]
             prev = i

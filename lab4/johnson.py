@@ -28,7 +28,7 @@ def remove(matr):
 
 def johnson(graph):
     d = potential(graph)
-    print(d[1])
+#    print(d[1])
     if not d[0]:
         print("Cykl ujemny, koncze dzialanie.")
         return False
@@ -43,8 +43,8 @@ def johnson(graph):
             if graph.adjacencyMatrix[i][j]:
                 graph.valueMatrix[i][j] += (d[1][i] - d[1][j])
 
-    for i in range(graph.nodes):
-        graph.show_dijkstra_tab(i, graph.dijkstra(i))
+#    for i in range(graph.nodes):
+#        graph.show_dijkstra_tab(i, graph.dijkstra(i))
 
     dist = graph.get_minimal_distances()
 
@@ -53,6 +53,7 @@ def johnson(graph):
             if dist[i][j] != 999:
                 dist[i][j] -= (d[1][i] - d[1][j])
 
+    print("Macierz sciezek:")
     graph.show_minimal_distances(dist)
 
 ##########################################
@@ -67,5 +68,4 @@ print("Macierz sasiedztwa:")
 Graph1.show()
 print("Macierz wag:")
 Graph1.show_value()
-print("Macierz sciezek:")
 johnson(Graph1)

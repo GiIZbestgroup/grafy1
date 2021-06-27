@@ -14,14 +14,22 @@ int** AdjListToIncMatr (std::vector<int> *adjList, int nodes, int edges)
 				if(!condition[j][i])
 				{
 				   IncMatr[i][counter] = 1;
+				   IncMatr[j][counter] = 1;
 				   
 				   condition[j][i] = true;
 				   condition[i][j] = true;
 				   
 				   counter++;
 				}
-		   }
+				
+				if (counter == edges)
+					break;
+			}
+			
+		if (counter == edges)
+			break;
 	}
+	
 	
 	//dealokujemy tablicę condition
 	return IncMatr;
